@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div class="header">
+  <h1>New York Times Search</h1>
+</div>
+<form>
+    <div class="row">
+        <div class="col-sm-12" style="background-color:whitesmoke;"><h3>Search Parameters</h3></div>
+    </div>
+    <div class="form-group1">
+      <label for="exampleFormControlInput1">Search Term:</label>
+      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
+    </div>
+    <div class="form-group2">
+      <label for="exampleFormControlSelect1">Number of Recrods to Retreive:</label>
+      <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>, <option>5</option>, <option>10</option>
+      </select>
+    </div>
+    <div class="form-group3">
+      <label for="exampleFormControlSelect2">Start Year (Optional):</label>
+      <select class="form-control" id="exampleFormControlSelect2">
+        <option>10</option>
+      </select>
+    </div>
+    <div class="form-group4">
+      <label for="exampleFormControlTextarea1">End Year (Optional):</label>
+      <select class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <div class="container">
+        <h2>Button Tags</h2>
+        <a href="#" class="btn btn-info" role="button">Link Button</a>
+        <button type="button" class="btn btn">Button</button>
+        <input type="button" class="btn1" value="Search">
+        <input type="submit" class="btn2" value="Clear Results">
+      </div>
+  </form>
+  <form>
+      <div class="row">
+          <div class="col-sm-12" style="background-color:whitesmoke;"><h3>Top Articles</h3></div>
+      </div>
+  </form>
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var startYear
+        var endYear
+        var numRecords
+        var searchTerm
+
+
+        $("button").on("click", function () {
+            startYear = $(".form-group3").val();
+            endYear = $(".form-group4").val();
+            searchTerm = $(".form-group1").val();
+
+            var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=" + searchTerm + "&begin_date=" + startYear + "&end_date=" + endYear + "&api-key=DAsGLXP4dTe4DxnTvx1WjrnOFQ3fPLGp";
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+
+                .then(function (response) {
+                    var results = response.docs
+
+                    for (var i = 0; i < numRecords; i++) {
+                        //  console.log(response)
+                        numRecords = $(".form-group2");
+                    }
+
+
+
+                    var headline = results.headline;
+                    var h = $("<p>").text(headline);
+                    var display = $("displaydiv");
+                    display.append(h); 
+
+
+                }
+                );
+        });
+
+    </script>
+
+</body>
+
+</html>
